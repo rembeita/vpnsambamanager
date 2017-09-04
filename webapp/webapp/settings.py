@@ -25,12 +25,13 @@ SECRET_KEY = 'd=%edl+j$6mv@l683_=ld3wmljbw2mq2_n3xtoi-q%cqg-ih_z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.8.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'sambamanager.apps.SambamanagerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -118,3 +119,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = ('/home/rodrigo/vpnsambamanager/webapp/sambamanager/templates/resources', )
