@@ -13,6 +13,8 @@ import json
 def mainmenu(request):
 	if request.method == 'POST':
 		formvar = request.POST
+		if "exit" in formvar.keys(): # (formvar.has_key('deleteuser')):
+			return HttpResponseRedirect("/sambamanager/")
 		print(dir(formvar))
 		uservalue = str(formvar['user_frm'])
 		passvalue = str(formvar['password_frm'])
@@ -27,14 +29,23 @@ def mainmenu(request):
 
 		print(formvar.keys())
 		if "deleteuser" in formvar.keys(): # (formvar.has_key('deleteuser')):
-			print("entre")
 			deleteuser = str(formvar['deleteuser'])
 			headers = {'Content-type': 'application/json'}
 			url = 'http://localhost:5000/samba/' + deleteuser
+			context['MESSAGE'] = 'The user ' + deleteuser + ' was eliminated.'
 			response = requests.delete(url, data=json.dumps(''), headers=headers )
-			#users_list = getsambausers('http://localhost:5000/sambausers/')
-			#context["users_list"] = users_list["users_list"]
-			#return render(request, 'sambamanager/mainmenu.html', context)
+		elif "add_user" in formvar.keys(): # (formvar.has_key('deleteuser')):
+			if (str(formvar["add_repassword"]) == str(formvar["add_password"])):
+				adduser = str(formvar['add_user'])
+				headers = {'Content-type': 'application/json'}
+				data = { 'username': adduser, 'password': str(formvar["add_password"]) }
+				context['MESSAGE'] = 'The user ' + adduser + ' was created.'
+				url = 'http://localhost:5000/samba/' + adduser
+				response = requests.post(url, data=json.dumps(data), headers=headers )
+			else:
+				context['MESSAGE'] = 'Different passwords' 
+			
+			
 
 	users_list = getsambausers('http://localhost:5000/sambausers/')
 	context["users_list"] = users_list["users_list"]

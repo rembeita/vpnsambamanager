@@ -28,6 +28,41 @@
 		<input type="hidden" name="user_frm" value="{{ USER }}">
 		<input type="hidden" name="password_frm" value="{{ PASS }}">
 	</div>
+	{% if MESSAGE %}
+	<div class="element-input">
+		<label class="title"></label>
+			<div class="item-cont" align="center" style="font-size: 20px">
+				<p style="color:red;">{{ MESSAGE }} <br></p>
+			</div></div>
+	{% endif %}
+
+
+	<div class="title3">
+		<h4>Add User</h4>
+	</div>
+
+	<div class="element-input">
+		<label class="title"></label>
+		<div class="item-cont" align="center">
+			<input  type="text" name="add_user" placeholder="Username"/>
+		</div>
+	</div>
+	<div class="element-input">
+		<label class="title"></label>
+		<div class="item-cont" align="center">
+			<input type="password" name="add_password" placeholder="Password"/>
+		</div>
+	</div>
+	<div class="element-input">
+		<label class="title"></label>
+		<div class="item-cont" align="center">
+			<input type="password" name="add_repassword" placeholder="Repeat Password"/>
+		</div>
+	</div>
+	<div class="submit">
+		<input type="submit" name="adduser" class="button-validar" value="Add">
+	</div>
+
 	<div class="title3">
 		<h4>Samba Users</h4>
 	</div>
@@ -54,31 +89,8 @@
 	</tbody>
 	</table>
 	</div>
-	<div class="title3">
-		<h4>Reservar Turno</h4>
-	</div>
-    <table id="keywords" cellspacing="0" cellpadding="0">
-    <thead>
-      <tr>
-        <th><span>Medico</span></th>
-        <th><span>Especialidad</span></th>
-        <th><span></span></th>
-      </tr>
-    </thead>
-    <tbody>
-                {% for key, value in DICMEDICOTMP.iteritems %}
-		<tr>
-		<td class="lalign"> {{ value.1 }} </td>
-		<td> {{ value.3 }} </td>
-		<td><button name="datosmedico" class="button-validar"  value="{{ value.1 }} || {{value.3}} || {{value.0 }} || {{value.4}}" >
-		Reservar
-		</td>
-		</tr>
-                {% endfor %} 
-   </tbody>
-   </table>
 <div class="submit">
-	<input type="submit" name="return" class="button-validar" value="Exit">
+	<input type="submit" name="exit" class="button-validar" value="Exit">
 </div>
 
 </form>
