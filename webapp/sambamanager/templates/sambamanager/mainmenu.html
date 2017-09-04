@@ -7,9 +7,9 @@
 </head>
 <body class="blurBg-false" style="background-color:#EBEBEB">
 <script>
-	function eliminarTurno()
+	function deleteuser()
 	{
-		document.dataForm.action = "/turnosapp/validaringreso/"
+		document.dataForm.action = "/sambamanager/mainmenu"
 	}
 </script>
 
@@ -18,17 +18,15 @@
 <link rel="stylesheet" href="/static/formoid-solid-blue-validar.css" type="text/css" />
 <link rel="stylesheet" href="/static/table_validar.css" type="text/css" />
 <script type="text/javascript" src="/static/jquery.min.js"></script>
-<form class="formoid-solid-blue" style="background-color:#FFFFFF;font-size:14px;font-family:'Roboto',Arial,Helvetica,sans-serif;color:#34495E;max-width:800px;min-width:150px" method="post" action="/sambamanager/" name="dataForm">
+<form class="formoid-solid-blue" style="background-color:#FFFFFF;font-size:14px;font-family:'Roboto',Arial,Helvetica,sans-serif;color:#34495E;max-width:800px;min-width:150px" method="post" action="/sambamanager/mainmenu" name="dataForm">
         {% csrf_token %}
 	<div class="title" align="center">
 		<h2>Samba Manager</h2>
 	</div>
 	<div class="title2" align="center">
 		<h3>USER: {{ USER }}</h3>
-		<input type="hidden" name="nombrepaciente" value="{{ PACIENTE }}">
-		<input type="hidden" name="dnipaciente" value="{{ DNIPACIENTE }}">
-		<input type="hidden" name="documento" value="{{ DOCUMENTO }}">
-		<input type="hidden" name="telefono" value="{{ TELEFONO }}">
+		<input type="hidden" name="user_frm" value="{{ USER }}">
+		<input type="hidden" name="password_frm" value="{{ PASS }}">
 	</div>
 	<div class="title3">
 		<h4>Samba Users</h4>
@@ -49,7 +47,7 @@
 					<td class="lalign"> {{ user.id }} </td> 
 					<td class="lalign"> {{ user.username }} </td>
 					<td class="lalign">
-					 <button name="datosturnos" onclick="eliminarTurno()" class="button-validar"  value="{{ turnos.hora }} || {{ turnos.id_relacion }}" > Delete </button>
+					 <button name="deleteuser" onclick="deleteuser()" class="button-validar"  value="{{ user.username }}" > Delete </button>
 					</td>
 				</tr>
 		{% endfor %}
