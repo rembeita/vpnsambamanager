@@ -6,10 +6,23 @@ from flask_jwt import jwt_required
 class VPNList(Resource):
 #	@jwt_required()
 	def get(self):
-		output = subprocess.run("/usr/bin/pdbedit -L", shell=True, stdout=subprocess.PIPE, universal_newlines=True)
-		result = self.parse_users(output.stdout)
+		with open('/root/openvpn-ca/keys/index.txt') as f:
+			read_data = f.read()
+		f.closed
+		result = self.parse_certs(read_data)
+		print(result)
 		return {'users_list': result}, 200
 
+	def parse_certs(self, data):
+		certs = data.split('\n')
+		result = {}
+		for i in certs:
+			if ( i != ''):
+				line = i.split('/')
+				result[line[6]] = line[0][0]
+		#print(result)
+		return result
+		
 
 class VPN(Resource):
 	#parser = reqparse.RequestParser()
