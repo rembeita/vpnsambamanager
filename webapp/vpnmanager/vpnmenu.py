@@ -8,37 +8,12 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate
 import requests
 import json
-
+import os
+from django.views.static import serve
+from django.utils.encoding import smart_str
+from wsgiref.util import FileWrapper
 
 def vpnmenu(request):
-	print("rodro")
-#	if request.method == 'POST':
-#		formvar = request.POST
-#		if "exit" in formvar.keys(): # (formvar.has_key('deleteuser')):
-#			return HttpResponseRedirect("/sambamanager/")
-#		print(dir(formvar))
-#		uservalue = str(formvar['user_frm'])
-#		passvalue = str(formvar['password_frm'])
-#		context = locals()
-#		context['USER'] = uservalue
-#		context['PASS'] = passvalue
-#		userquery = authenticate(username=uservalue, password=passvalue)
-#		if userquery is None:
-#			message = "User or Password is incorrect."
-#			context['MENSAJE'] = message
-#			return render(request, 'sambamanager/invaliduserpass.html', context)
-#
-#		print(formvar.keys())
-#		elif "add_user" in formvar.keys(): # (formvar.has_key('deleteuser')):
-#			if (str(formvar["add_repassword"]) == str(formvar["add_password"])):
-#				adduser = str(formvar['add_user'])
-#				headers = {'Content-type': 'application/json'}
-#				data = { 'username': adduser, 'password': str(formvar["add_password"]) }
-#				context['MESSAGE'] = 'The user ' + adduser + ' was created.'
-#				url = 'http://localhost:5000/samba/' + adduser
-#				response = requests.post(url, data=json.dumps(data), headers=headers )
-#			else:
-#				context['MESSAGE'] = 'Different passwords' 
 			
 	signup = request.session.pop('signup', False)
 	print(signup)
@@ -62,6 +37,17 @@ def vpnmenu(request):
 			url = 'http://localhost:5000/vpn/' + adduser
 			context['MESSAGE'] = 'The user ' + adduser + ' was created.'
 			response = requests.post(url, data=json.dumps(''), headers=headers )
+		if "downloaduser" in formvar.keys(): # (formvar.has_key('deleteuser')):
+			downloaduser = str(formvar['downloaduser'])
+			filepath = '/root/client-configs/files/' 
+			filenameovpn = downloaduser + '.ovpn'
+			filename = filepath + filenameovpn
+			wrapper = FileWrapper(open(filename))
+			response = HttpResponse(wrapper, content_type='text/plain')
+			response['Content-Disposition'] = 'attachment; filename=%s' % os.path.basename(filename)
+			response['Content-Length'] = os.path.getsize(filename)
+			return response
+
 
 	users_list = getvpnusers('http://localhost:5000/vpnusers/')
 	context["users_list"] = users_list["users_list"]

@@ -11,6 +11,10 @@
 	{
 		document.dataForm.action = "/vpnmanager/"
 	}
+	function downloaduser()
+	{
+		document.dataForm.action = "/vpnmanager/"
+	}
 </script>
 
 
@@ -62,6 +66,7 @@
         <th><span>Username</span></th>
         <th><span>Valid/Revoked</span></th>
         <th><span></span></th>
+        <th><span></span></th>
       </tr>
     </thead>
     <tbody>
@@ -71,7 +76,10 @@
 					<td class="lalign"> {{ key }} </td> 
 					<td class="lalign"> {{ value }} </td>
 					<td class="lalign">
-					 <button name="deleteuser" onclick="deleteuser()" class="button-validar"  value="{{ key }}" > Delete </button>
+						 <button name="deleteuser" onclick="deleteuser()" class="button-validar"  value="{{ key }}" > Delete </button>
+					</td>
+					<td class="lalign">
+						 <button name="downloaduser" onclick="downloaduser()" class="button-validar"  value="{{ key }}" > Download </button>
 					</td>
 				</tr>
 		{% endfor %}
