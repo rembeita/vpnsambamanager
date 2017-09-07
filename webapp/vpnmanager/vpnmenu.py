@@ -28,12 +28,6 @@ def vpnmenu(request):
 #			return render(request, 'sambamanager/invaliduserpass.html', context)
 #
 #		print(formvar.keys())
-#		if "deleteuser" in formvar.keys(): # (formvar.has_key('deleteuser')):
-#			deleteuser = str(formvar['deleteuser'])
-#			headers = {'Content-type': 'application/json'}
-#			url = 'http://localhost:5000/samba/' + deleteuser
-#			context['MESSAGE'] = 'The user ' + deleteuser + ' was eliminated.'
-#			response = requests.delete(url, data=json.dumps(''), headers=headers )
 #		elif "add_user" in formvar.keys(): # (formvar.has_key('deleteuser')):
 #			if (str(formvar["add_repassword"]) == str(formvar["add_password"])):
 #				adduser = str(formvar['add_user'])
@@ -48,8 +42,19 @@ def vpnmenu(request):
 	signup = request.session.pop('signup', False)
 	if (signup == False):
 		return HttpResponseRedirect("/")
-
+	else:
+		request.session["signup"] = True
+	
 	context = locals()
+	if request.method == 'POST':
+		formvar = request.POST
+		if "deleteuser" in formvar.keys(): # (formvar.has_key('deleteuser')):
+			deleteuser = str(formvar['deleteuser'])
+			headers = {'Content-type': 'application/json'}
+			url = 'http://localhost:5000/samba/' + deleteuser
+			context['MESSAGE'] = 'The user ' + deleteuser + ' was eliminated.'
+			response = requests.delete(url, data=json.dumps(''), headers=headers )
+
 	users_list = getvpnusers('http://localhost:5000/vpnusers/')
 	print(users_list)
 	context["users_list"] = users_list["users_list"]

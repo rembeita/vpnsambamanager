@@ -10,7 +10,7 @@ import requests
 import json
 
 
-def mainmenu(request):
+def sambamenu(request):
 	context = locals()
 	signup = request.session.pop('signup', False)
 	if (signup == False):
@@ -30,8 +30,11 @@ def mainmenu(request):
 		elif "add_user" in formvar.keys(): # (formvar.has_key('deleteuser')):
 			if (str(formvar["add_repassword"]) == str(formvar["add_password"])):
 				adduser = str(formvar['add_user'])
+				addpass= str(formvar["add_password"])
+				addgroup = str(formvar["add_group"])
+				print(addgroup)
 				headers = {'Content-type': 'application/json'}
-				data = { 'username': adduser, 'password': str(formvar["add_password"]) }
+				data = { 'username': adduser, 'password': addpass, 'group': addgroup }
 				context['MESSAGE'] = 'The user ' + adduser + ' was created.'
 				url = 'http://localhost:5000/samba/' + adduser
 				response = requests.post(url, data=json.dumps(data), headers=headers )
@@ -42,7 +45,7 @@ def mainmenu(request):
 
 	users_list = getsambausers('http://localhost:5000/sambausers/')
 	context["users_list"] = users_list["users_list"]
-	return render(request, 'sambamanager/mainmenu.html', context)
+	return render(request, 'sambamanager/sambamenu.html', context)
 
 def getsambausers(url):
 	response = requests.get(url)
