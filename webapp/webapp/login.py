@@ -13,14 +13,13 @@ from django.template import RequestContext, loader
 #    return HttpResponse("Hello, world. You're at the polls index.")
 
 
-
 def login(request):
-       template = loader.get_template('sambamanager/index.html')
+       template = loader.get_template('general/index.html')
        #STATIC_URL_ROD = '/static/'
        context = locals()
        #context['STATIC_URL_ROD'] = STATIC_URL_ROD
 
        context_instance = RequestContext(request)
-       return render(request, 'sambamanager/index.html', context)
+       return render(request, 'general/index.html', context)
 
 

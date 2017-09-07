@@ -45,7 +45,9 @@ def vpnmenu(request):
 #			else:
 #				context['MESSAGE'] = 'Different passwords' 
 			
-			
+	signup = request.session.pop('signup', False)
+	if (signup == False):
+		return HttpResponseRedirect("/")
 
 	context = locals()
 	users_list = getvpnusers('http://localhost:5000/vpnusers/')

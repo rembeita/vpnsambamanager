@@ -11,24 +11,17 @@ import json
 
 
 def mainmenu(request):
+	context = locals()
+	signup = request.session.pop('signup', False)
+	if (signup == False):
+		return HttpResponseRedirect("/")
+	else:
+		request.session["signup"] = True
 	if request.method == 'POST':
 		formvar = request.POST
 		if "exit" in formvar.keys(): # (formvar.has_key('deleteuser')):
-			return HttpResponseRedirect("/sambamanager/")
-		print(dir(formvar))
-		uservalue = str(formvar['user_frm'])
-		passvalue = str(formvar['password_frm'])
-		context = locals()
-		context['USER'] = uservalue
-		context['PASS'] = passvalue
-		userquery = authenticate(username=uservalue, password=passvalue)
-		if userquery is None:
-			message = "User or Password is incorrect."
-			context['MENSAJE'] = message
-			return render(request, 'sambamanager/invaliduserpass.html', context)
-
-		print(formvar.keys())
-		if "deleteuser" in formvar.keys(): # (formvar.has_key('deleteuser')):
+			return HttpResponseRedirect("/")
+		elif "deleteuser" in formvar.keys(): # (formvar.has_key('deleteuser')):
 			deleteuser = str(formvar['deleteuser'])
 			headers = {'Content-type': 'application/json'}
 			url = 'http://localhost:5000/samba/' + deleteuser

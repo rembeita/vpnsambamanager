@@ -5,5 +5,6 @@ from . import vpnmenu
 
 urlpatterns = [
 #    url(r'^$', views.index, name='index'),
-    url(r'^vpnmenu/$', vpnmenu.vpnmenu, name='vpnmenu'),
+    #url(r'^vpnmenu/$', vpnmenu.vpnmenu, name='vpnmenu'),
+    url(r'^$', vpnmenu.vpnmenu, name='vpnmenu'),
 ]
