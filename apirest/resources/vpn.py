@@ -1,7 +1,8 @@
 import subprocess
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
-
+from flask import send_from_directory
+import time
 
 class VPNList(Resource):
 #	@jwt_required()
@@ -31,16 +32,14 @@ class VPN(Resource):
 	def post(self, name):
 	#	data = Samba.parser.parse_args()
 		print("entre")
-		cmd = subprocess.Popen('/home/rodrigo/vpnsambamanager/apirest/create_vpn_user1.sh ' + name, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell = True) 
+		cmd = subprocess.Popen('/home/rodrigo/vpnsambamanager/apirest/create_vpn_user1.sh ' + name, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell = True)
+		time.sleep(5) 
 		cmd.stdin.write(b'\n')
 		cmd.stdin.flush()
-		print(cmd.stdout)
 		cmd.stdin.write(b'\n')
 		cmd.stdin.flush()
-		print(cmd.stdout)
 		cmd.stdin.write(b'\n')
 		cmd.stdin.flush()
-		print(cmd.stdout)
 		cmd.stdin.write(b'\n')
 		cmd.stdin.flush()
 		cmd.stdin.write(b'\n')
@@ -59,14 +58,14 @@ class VPN(Resource):
 		cmd.stdin.flush()
 		cmd.stdin.write(b'y\n')
 		cmd.stdin.flush()
-		for line in cmd.stdout.readlines():
-			print(line)
+		print("llegue")
 		output = subprocess.run("/home/rodrigo/vpnsambamanager/apirest/create_vpn_user2.sh " + name , shell=True, stdout=subprocess.PIPE, universal_newlines=True)
+		print("llegue2")
 		print(output.stdout)
 		output2 = subprocess.run("/home/rodrigo/vpnsambamanager/apirest/create_vpn_user3.sh " + name , shell=True, stdout=subprocess.PIPE, universal_newlines=True)
+		print("llegue3")
 		print(output.stdout)
-
-		return 200
+		return send_from_directory(directory='/tmp/', filename=name+".ovpn")
 
 	def delete(self, name):
 	#	data = Samba.parser.parse_args()
