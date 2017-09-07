@@ -9,7 +9,7 @@
 <script>
 	function deleteuser()
 	{
-		document.dataForm.action = "/sambamanager/mainmenu"
+		document.dataForm.action = "/sambamanager/"
 	}
 </script>
 
@@ -57,6 +57,16 @@
 		<label class="title"></label>
 		<div class="item-cont" align="center">
 			<input type="password" name="add_repassword" placeholder="Repeat Password"/>
+		</div>
+	</div>
+	<div class="element-input">
+		<label class="title"></label>
+		<div class="item-cont" align="center">
+			<select name="add_group" style="max-width:20%;">
+				  <option value="iqa_admin">IQA Admin</option>
+				  <option value="iqa_user">IQA User</option>
+				  <option value="none">None</option>
+			</select>
 		</div>
 	</div>
 	<div class="submit">
