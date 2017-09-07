@@ -20,9 +20,9 @@ from . import select
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^sambamanager/$', include('sambamanager.urls')),
-    url(r'^vpnmanager/$', include('vpnmanager.urls')),
-    url(r'^select/$', select.select, name='select'),
+    url(r'^sambamanager/', include('sambamanager.urls')),
+    url(r'^vpnmanager/', include('vpnmanager.urls')),
+    url(r'^select/', select.select, name='select'),
     url(r'^$', login.login, name='login'),
 
 ]

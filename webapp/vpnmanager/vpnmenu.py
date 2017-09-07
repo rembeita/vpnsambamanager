@@ -11,6 +11,7 @@ import json
 
 
 def vpnmenu(request):
+	print("rodro")
 #	if request.method == 'POST':
 #		formvar = request.POST
 #		if "exit" in formvar.keys(): # (formvar.has_key('deleteuser')):
@@ -40,6 +41,7 @@ def vpnmenu(request):
 #				context['MESSAGE'] = 'Different passwords' 
 			
 	signup = request.session.pop('signup', False)
+	print(signup)
 	if (signup == False):
 		return HttpResponseRedirect("/")
 	else:
@@ -51,12 +53,17 @@ def vpnmenu(request):
 		if "deleteuser" in formvar.keys(): # (formvar.has_key('deleteuser')):
 			deleteuser = str(formvar['deleteuser'])
 			headers = {'Content-type': 'application/json'}
-			url = 'http://localhost:5000/samba/' + deleteuser
-			context['MESSAGE'] = 'The user ' + deleteuser + ' was eliminated.'
+			url = 'http://localhost:5000/vpn/' + deleteuser
+			context['MESSAGE'] = 'The user ' + deleteuser + ' was revoked.'
 			response = requests.delete(url, data=json.dumps(''), headers=headers )
+		if "adduser" in formvar.keys(): # (formvar.has_key('deleteuser')):
+			adduser = str(formvar['username'])
+			headers = {'Content-type': 'application/json'}
+			url = 'http://localhost:5000/vpn/' + adduser
+			context['MESSAGE'] = 'The user ' + adduser + ' was created.'
+			response = requests.post(url, data=json.dumps(''), headers=headers )
 
 	users_list = getvpnusers('http://localhost:5000/vpnusers/')
-	print(users_list)
 	context["users_list"] = users_list["users_list"]
 	return render(request, 'vpnmanager/vpnmenu.html', context)
 

@@ -2,5 +2,5 @@
 echo "Creating user $1"
 cd /root/openvpn-ca
 source vars
-./build-key $1
+./build-key --batch $1
 
