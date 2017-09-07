@@ -14,7 +14,7 @@ from django.template import RequestContext, loader
 
 
 
-def index(request):
+def login(request):
        template = loader.get_template('sambamanager/index.html')
        #STATIC_URL_ROD = '/static/'
        context = locals()

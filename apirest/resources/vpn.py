@@ -19,7 +19,7 @@ class VPNList(Resource):
 		for i in certs:
 			if ( i != ''):
 				line = i.split('/')
-				result[line[6]] = line[0][0]
+				result[str(line[6]).replace("CN=","")] = line[0][0]
 		#print(result)
 		return result
 		

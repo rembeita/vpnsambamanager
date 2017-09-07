@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>VPN Manager</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="blurBg-false" style="background-color:#EBEBEB">
+<script>
+	function deleteuser()
+	{
+		document.dataForm.action = "/vpnmanager/mainmenu/"
+	}
+</script>
+
+
+<!-- Start Formoid form-->
+<link rel="stylesheet" href="/static/formoid-solid-blue-validar.css" type="text/css" />
+<link rel="stylesheet" href="/static/table_validar.css" type="text/css" />
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<form class="formoid-solid-blue" style="background-color:#FFFFFF;font-size:14px;font-family:'Roboto',Arial,Helvetica,sans-serif;color:#34495E;max-width:800px;min-width:150px" method="post" action="/vpnmanager/mainmenu" name="dataForm">
+        {% csrf_token %}
+	<div class="title" align="center">
+		<h2>VPN Manager</h2>
+	</div>
+	<div class="title2" align="center">
+		<h3>USER: {{ USER }}</h3>
+		<input type="hidden" name="user_frm" value="{{ USER }}">
+		<input type="hidden" name="password_frm" value="{{ PASS }}">
+	</div>
+	{% if MESSAGE %}
+	<div class="element-input">
+		<label class="title"></label>
+			<div class="item-cont" align="center" style="font-size: 20px">
+				<p style="color:red;">{{ MESSAGE }} <br></p>
+			</div></div>
+	{% endif %}
+
+
+	<div class="title3">
+		<h4>Add User</h4>
+	</div>
+
+	<div class="element-input">
+		<label class="title"></label>
+		<div class="item-cont" align="center">
+			<input  type="text" name="add_user" placeholder="Username"/>
+		</div>
+	</div>
+	<div class="element-input">
+	<div class="submit">
+		<input type="submit" name="adduser" class="button-validar" value="Add">
+	</div>
+
+	<div class="title3">
+		<h4>VPN Users</h4>
+	</div>
+	<div>
+    <table id="keywords" cellspacing="0" cellpadding="0">
+    <thead>
+      <tr>
+        <th><span>Username</span></th>
+        <th><span>Valid/Revoked</span></th>
+        <th><span></span></th>
+      </tr>
+    </thead>
+    <tbody>
+		{% for key, value in users_list.items %}
+					 
+				<tr>
+					<td class="lalign"> {{ key }} </td> 
+					<td class="lalign"> {{ value }} </td>
+					<td class="lalign">
+					 <button name="deleteuser" onclick="deleteuser()" class="button-validar"  value="{{ key }}" > Delete </button>
+					</td>
+				</tr>
+		{% endfor %}
+	</tbody>
+	</table>
+	</div>
+<div class="submit">
+	<input type="submit" name="exit" class="button-validar" value="Exit">
+</div>
+
+</form>
+</body>
+</html>
+

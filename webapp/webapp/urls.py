@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-
+from . import login
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^sambamanager/', include('sambamanager.urls')),
+    url(r'^vpnmanager/', include('vpnmanager.urls')),
+    url(r'^$', login.login, name='login'),
+
 ]
 
