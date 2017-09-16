@@ -14,33 +14,35 @@ import json
 def select(request):
 	if request.method == 'POST':
 		formvar = request.POST
-		print(formvar.keys())
-		uservalue = str(formvar['user_frm'])
-		passvalue = str(formvar['password_frm'])
-		userquery = authenticate(username=uservalue, password=passvalue)
 		context = locals()
+		if "exit" in formvar.keys():
+			return HttpResponseRedirect("/")
 		signup = request.session.pop("signup", False)
-		if (signup == False):
+		if (signup == True):
+			if "samba_admin" in formvar.keys(): # (formvar.has_key('deleteuser')):
+				request.session['signup'] = True
+				return redirect("/sambamanager/")
+			if "vpn_admin" in formvar.keys(): # (formvar.has_key('deleteuser')):
+				request.session['signup'] = True
+				return redirect("/vpnmanager/")
+		else:
+			uservalue = str(formvar['user_frm'])
+			passvalue = str(formvar['password_frm'])
+			print("entre")
+			print(passvalue)
+			userquery = authenticate(username=uservalue, password=passvalue)
 			if userquery is None:
-				print("entre2")
 				message = "User or Password is incorrect."
 				context['MENSAJE'] = message
 				return render(request, 'general/invaliduserpass.html', context)
 			else:
-				print("entre1")
 				request.session['signup'] = True
-		else:
-			request.session["signup"] = True
-		#print(signup)
-		#print(signup)
-		if "samba_admin" in formvar.keys(): # (formvar.has_key('deleteuser')):
+				return render(request, 'general/select.html', context)
+	else:
+		signup = request.session.pop("signup", False)
+		if (signup == True):
+			context = locals()
 			request.session['signup'] = True
-			print("Aca")
-			return redirect("/sambamanager/")
-		if "vpn_admin" in formvar.keys(): # (formvar.has_key('deleteuser')):
-			request.session['signup'] = True
-			print("Aca2")
-			return redirect("/vpnmanager/")
 
 	return render(request, 'general/select.html', context)
 

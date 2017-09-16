@@ -4,24 +4,30 @@ from flask_jwt import jwt_required
 
 class SambaList(Resource):
 #       @jwt_required()
-        def get(self):
-                output = subprocess.run("/usr/bin/pdbedit -L", shell=True, stdout=subprocess.PIPE, universal_newlines=True)
-                result = self.parse_users(output.stdout)
-                return {'users_list': result}, 200
+	def get(self):
+		output = subprocess.run("/usr/bin/pdbedit -L", shell=True, stdout=subprocess.PIPE, universal_newlines=True)
+		result = self.parse_users(output.stdout)
+		return {'users_list': result}, 200
 
-        def parse_users(self, users_string):
-                users_list = users_string.replace('\n', '').split(':')
-                result_list = []
-                result_dic = {}
-                for i in range(len(users_list)):
-                        if ( i % 2 == 0):
-                                result_dic['username'] = users_list[i]
-                        else:
-                                result_dic['id'] = users_list[i]
-                                result_list.append(result_dic)
-                                result_dic = {}
-                result_list
-                return result_list
+	def parse_users(self, users_string):
+		users_list = users_string.replace('\n', '').split(':')
+		result_list = []
+		result_dic = {}
+		for i in range(len(users_list)-1):
+			if ( i % 2 == 0):
+				result_dic['username'] = users_list[i]
+				result_dic['group'] = self.parse_groups(users_list[i])
+			else:
+				result_dic['id'] = users_list[i]
+				result_list.append(result_dic)
+				result_dic = {}
+		result_list
+		return result_list
+
+	def parse_groups(self, usergroup):
+		getgroup = subprocess.run("/usr/bin/groups " + usergroup, shell=True, stdout=subprocess.PIPE, universal_newlines=True)
+		resp = str(getgroup.stdout).replace(' ','').replace('\n','').split(':')[1]
+		return resp
 
 class Samba(Resource):
 	parser = reqparse.RequestParser()

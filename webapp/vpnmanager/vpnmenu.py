@@ -25,19 +25,24 @@ def vpnmenu(request):
 	context = locals()
 	if request.method == 'POST':
 		formvar = request.POST
-		if "deleteuser" in formvar.keys(): # (formvar.has_key('deleteuser')):
+		if "exit" in formvar.keys():
+			return HttpResponseRedirect("/")
+		elif "back" in formvar.keys():
+			request.session["signup"] = True
+			return HttpResponseRedirect("/select/")
+		elif "deleteuser" in formvar.keys(): # (formvar.has_key('deleteuser')):
 			deleteuser = str(formvar['deleteuser'])
 			headers = {'Content-type': 'application/json'}
 			url = 'http://localhost:5000/vpn/' + deleteuser
 			context['MESSAGE'] = 'The user ' + deleteuser + ' was revoked.'
 			response = requests.delete(url, data=json.dumps(''), headers=headers )
-		if "adduser" in formvar.keys(): # (formvar.has_key('deleteuser')):
+		elif "adduser" in formvar.keys(): # (formvar.has_key('deleteuser')):
 			adduser = str(formvar['username'])
 			headers = {'Content-type': 'application/json'}
 			url = 'http://localhost:5000/vpn/' + adduser
 			context['MESSAGE'] = 'The user ' + adduser + ' was created.'
 			response = requests.post(url, data=json.dumps(''), headers=headers )
-		if "downloaduser" in formvar.keys(): # (formvar.has_key('deleteuser')):
+		elif "downloaduser" in formvar.keys(): # (formvar.has_key('deleteuser')):
 			downloaduser = str(formvar['downloaduser'])
 			filepath = '/root/client-configs/files/' 
 			filenameovpn = downloaduser + '.ovpn'
