@@ -21,7 +21,7 @@ class SambaList(Resource):
 				result_dic['id'] = users_list[i]
 				result_list.append(result_dic)
 				result_dic = {}
-		result_list = sorted(result_list, key=lambda k: k['username']) 
+		result_list = sorted(result_list, key=lambda k: (k['group'], k['username'])) 
 		return result_list
 
 	def parse_groups(self, usergroup):
