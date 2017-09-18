@@ -61,7 +61,6 @@ class Samba(Resource):
 		data = Samba.parser.parse_args()
 		print(data['username'])
 		print(data['password'])
-		print(data['group'])
 		cmd = subprocess.Popen('/usr/bin/smbpasswd -a ' + data['username'] , stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell = True) 
 		cmd.stdin.write(b''+ str(data['password']).encode('UTF-8') +b'\n')
 		cmd.stdin.flush()

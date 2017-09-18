@@ -9,12 +9,15 @@
 <script>
 	function deleteuser()
 	{
-		document.dataForm.action = "/sambamanager/"
+		document.dataForm.action = "/sambamanager/";
 	}
+/*
 	function changeuser()
 	{
-		document.dataForm.action = "/sambamanager/"
+		document.getElementsById("dataForm").action = "/sambamanager/changepassword/";
+		document.getElementsById("dataForm").submit();
 	}
+*/
 </script>
 
 
@@ -22,7 +25,7 @@
 <link rel="stylesheet" href="/static/formoid-solid-blue-validar.css" type="text/css" />
 <link rel="stylesheet" href="/static/table_validar.css" type="text/css" />
 <script type="text/javascript" src="/static/jquery.min.js"></script>
-<form class="formoid-solid-blue" style="background-color:#FFFFFF;font-size:14px;font-family:'Roboto',Arial,Helvetica,sans-serif;color:#34495E;max-width:800px;min-width:150px" method="post" action="/sambamanager/" name="dataForm">
+<form id="dataForm" class="formoid-solid-blue" style="background-color:#FFFFFF;font-size:14px;font-family:'Roboto',Arial,Helvetica,sans-serif;color:#34495E;max-width:800px;min-width:150px" method="post" action="/sambamanager/" name="dataForm">
         {% csrf_token %}
 	<div class="title" align="center">
 		<h2>Samba Manager</h2>
@@ -99,7 +102,7 @@
 					<td class="lalign"> {{ user.group }} </td>
 					<td class="lalign">
 					 <button name="deleteuser" onclick="deleteuser()" class="button-validar"  value="{{ user.username }}" > Delete </button>
-<!--					 <button name="changeuser" onclick="changeuser()" class="button-validar"  value="{{ user.username }}" > Change Password </button> -->
+					 <button name="changeuser" formaction="/sambamanager/changepassword/" class="button-validar"  value="{{ user.username }}" > Reset Password </button> 
 					</td>
 				</tr>
 		{% endfor %}
