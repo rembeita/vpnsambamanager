@@ -16,13 +16,22 @@ class VPNList(Resource):
 
 	def parse_certs(self, data):
 		certs = data.split('\n')
-		result = {}
+		result_list = []
 		for i in certs:
 			if ( i != ''):
+				result_dic = {}
 				line = i.split('/')
-				result[str(line[6]).replace("CN=","")] = line[0][0]
-		#print(result)
-		return result
+				#result[str(line[6]).replace("CN=","")] = line[0][0]
+				result_dic["username"] = str(line[6]).replace("CN=","")
+				if (line[0][0] == "V" ):
+					actcert = "Valid"
+				else:
+					actcert = "Revoked"
+				result_dic["cert"] = actcert
+				result_list.append(result_dic)
+		result_list = sorted(result_list, key=lambda k: k['username'])
+		print(result_list)
+		return result_list
 		
 
 class VPN(Resource):

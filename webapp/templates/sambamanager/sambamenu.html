@@ -11,6 +11,10 @@
 	{
 		document.dataForm.action = "/sambamanager/"
 	}
+	function changeuser()
+	{
+		document.dataForm.action = "/sambamanager/"
+	}
 </script>
 
 
@@ -95,6 +99,7 @@
 					<td class="lalign"> {{ user.group }} </td>
 					<td class="lalign">
 					 <button name="deleteuser" onclick="deleteuser()" class="button-validar"  value="{{ user.username }}" > Delete </button>
+<!--					 <button name="changeuser" onclick="changeuser()" class="button-validar"  value="{{ user.username }}" > Change Password </button> -->
 					</td>
 				</tr>
 		{% endfor %}

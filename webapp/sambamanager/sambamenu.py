@@ -20,8 +20,10 @@ def sambamenu(request):
 	if request.method == 'POST':
 		formvar = request.POST
 		if "exit" in formvar.keys(): # (formvar.has_key('deleteuser')):
+			request.session["signup"] = False
 			return HttpResponseRedirect("/")
 		elif "back" in formvar.keys():
+			request.session["signup"] = True
 			return HttpResponseRedirect("/select/")
 		elif "deleteuser" in formvar.keys(): # (formvar.has_key('deleteuser')):
 			deleteuser = str(formvar['deleteuser'])

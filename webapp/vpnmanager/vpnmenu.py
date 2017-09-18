@@ -26,6 +26,7 @@ def vpnmenu(request):
 	if request.method == 'POST':
 		formvar = request.POST
 		if "exit" in formvar.keys():
+			request.session["signup"] = False
 			return HttpResponseRedirect("/")
 		elif "back" in formvar.keys():
 			request.session["signup"] = True

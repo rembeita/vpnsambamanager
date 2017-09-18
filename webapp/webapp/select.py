@@ -16,6 +16,7 @@ def select(request):
 		formvar = request.POST
 		context = locals()
 		if "exit" in formvar.keys():
+			request.session['signup'] = False
 			return HttpResponseRedirect("/")
 		signup = request.session.pop("signup", False)
 		if (signup == True):

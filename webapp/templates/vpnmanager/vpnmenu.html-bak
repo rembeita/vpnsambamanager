@@ -70,16 +70,16 @@
       </tr>
     </thead>
     <tbody>
-		{% for user in users_list %}
+		{% for key, value in users_list.items %}
 					 
 				<tr>
-					<td class="lalign"> {{ user.username }} </td> 
-					<td class="lalign"> {{ user.cert }} </td>
+					<td class="lalign"> {{ key }} </td> 
+					<td class="lalign"> {{ value }} </td>
 					<td class="lalign">
-						 <button name="deleteuser" onclick="deleteuser()" class="button-validar"  value="{{ user.username }}" > Delete </button>
+						 <button name="deleteuser" onclick="deleteuser()" class="button-validar"  value="{{ key }}" > Delete </button>
 					</td>
 					<td class="lalign">
-						 <button name="downloaduser" onclick="downloaduser()" class="button-validar"  value="{{ user.username }}" > Download </button>
+						 <button name="downloaduser" onclick="downloaduser()" class="button-validar"  value="{{ key }}" > Download </button>
 					</td>
 				</tr>
 		{% endfor %}
