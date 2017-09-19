@@ -15,6 +15,8 @@ from django.template import RequestContext, loader
 
 def login(request):
        template = loader.get_template('general/index.html')
+       request.session['signup'] = False
+
        #STATIC_URL_ROD = '/static/'
        context = locals()
        #context['STATIC_URL_ROD'] = STATIC_URL_ROD
